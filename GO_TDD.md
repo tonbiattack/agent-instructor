@@ -36,6 +36,27 @@
 
 ## テストの書き方
 
+### テスト名のルール
+**テスト名（test name）は日本語で記載すること**
+- 理由: Test Explorer 上で一覧した際に、仕様単位でのテストケース漏れを視認しやすくするため
+- 例: `Test金額計算_手数料込み`、`Test集計条件_週間合計10万円超`
+
+```go
+func Test金額計算_手数料込み(t *testing.T) {
+    // Arrange（準備）
+    price := 1000
+    fee := 100
+    
+    // Act（実行）
+    total := CalculateTotal(price, fee)
+    
+    // Assert（検証）
+    if total != 1100 {
+        t.Errorf("expected 1100, got %d", total)
+    }
+}
+```
+
 ### 単体テスト（標準testing）
 ```go
 package user
@@ -61,15 +82,16 @@ func TestGetUserByID(t *testing.T) {
 
 ### テーブル駆動テスト
 ```go
-func TestValidateUser(t *testing.T) {
+func Testユーザーバリデーション(t *testing.T) {
     tests := []struct {
         name    string
         input   User
         wantErr bool
     }{
-        {"valid user", User{Name: "John", Email: "john@example.com"}, false},
-        {"empty name", User{Name: "", Email: "john@example.com"}, true},
-        {"invalid email", User{Name: "John", Email: "invalid"}, true},
+        {"正常なユーザー", User{Name: "John", Email: "john@example.com"}, false},
+        {"名前が空", User{Name: "", Email: "john@example.com"}, true},
+        {"無効なメール", User{Name: "John", Email: "invalid"}, true},
+    }
     }
     
     for _, tt := range tests {

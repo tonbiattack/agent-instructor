@@ -50,7 +50,7 @@ package user
 
 import "testing"
 
-func TestGetUserByID(t *testing.T) {
+func Testユーザー取得_ID指定(t *testing.T) {
     // まだ GetUserByID は存在しない状態
     userID := 1
     
@@ -70,16 +70,16 @@ func TestGetUserByID(t *testing.T) {
 ### テーブル駆動テスト
 ```go
 // user_test.go
-func TestValidateUser(t *testing.T) {
+func Testユーザーバリデーション(t *testing.T) {
     tests := []struct {
         name    string
         input   User
         wantErr bool
     }{
-        {"valid user", User{Name: "John", Email: "john@example.com"}, false},
-        {"empty name", User{Name: "", Email: "john@example.com"}, true},
-        {"invalid email", User{Name: "John", Email: "invalid"}, true},
-        {"long name", User{Name: string(make([]byte, 256)), Email: "test@example.com"}, true},
+        {"正常なユーザー", User{Name: "John", Email: "john@example.com"}, false},
+        {"名前が空", User{Name: "", Email: "john@example.com"}, true},
+        {"無効なメール", User{Name: "John", Email: "invalid"}, true},
+        {"長すぎる名前", User{Name: string(make([]byte, 256)), Email: "test@example.com"}, true},
     }
     
     for _, tt := range tests {
@@ -249,6 +249,9 @@ project/
 
 ## ルール
 - テストは実装前に必ず作成
+- **テスト名（test name）は日本語で記載**
+  - 理由: Test Explorer 上で一覧した際に、仕様単位でのテストケース漏れを視認しやすくするため
+  - 例: `Test金額計算_手数料込み`、`Test集計条件_週間合計10万円超`
 - `_test.go` ファイルを先に作る
 - インターフェースを先に定義（外部API用、内部実装のモック用ではない）
 - テストコードは読みやすく保守しやすい構造
