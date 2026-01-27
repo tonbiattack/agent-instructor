@@ -6,6 +6,13 @@
 - **MySQL**: データベース
 - **Cobra**: CLI フレームワーク
 
+## テスト手法の方針（古典派）
+- **データベースアクセスは実DBを使用**（モックを使用しない）
+- **モックは外部API等の外部結合のみ**に限定
+- 内部で閉じている実装（リポジトリ、サービス層など）に対してモックを使用しない
+- 実際のMySQLを使ってテストすることで、テストの信頼性を向上
+- トランザクションやロールバックを活用してテストを独立させる
+
 ## 基本サイクル: Red-Green-Refactor
 
 ### Red - 失敗するテストを書く
@@ -73,25 +80,25 @@ func TestValidateUser(t *testing.T) {
 }
 ```
 
-### GORM のモック（インターフェース）
+### 外部APIのモック例（外部結合のみ）
 ```go
-// リポジトリインターフェース
-type UserRepository interface {
-    FindByID(id int) (*User, error)
-    Create(user *User) error
+// 外部API用のインターフェース（モックOK）
+type ExternalAPIClient interface {
+    SendEmail(to, subject, body string) error
+    FetchUserProfile(userID string) (*Profile, error)
 }
 
-// テスト用モック
-type MockUserRepository struct {
-    users map[int]*User
+// テスト用モック（外部APIなのでモック使用）
+type MockExternalAPIClient struct {
+    sendEmailCalled bool
 }
 
-func (m *MockUserRepository) FindByID(id int) (*User, error) {
-    if user, ok := m.users[id]; ok {
-        return user, nil
-    }
-    return nil, errors.New("user not found")
+func (m *MockExternalAPIClient) SendEmail(to, subject, body string) error {
+    m.sendEmailCalled = true
+    return nil // 実際には外部に通信しない
 }
+
+// 注意: 内部のリポジトリやサービス層はモックせず、実DBを使用する
 ```
 
 ### データベーステスト
@@ -195,11 +202,13 @@ air -c .air.toml
 ```
 
 ## ベストプラクティス
+- **データベースは実DBを使用**（モック禁止）
 - データベースは各テストで独立した状態にする
 - トランザクションを使ってテスト後にロールバック
 - テスト用の設定ファイルを分離（config.test.yml）
 - 環境変数でテスト用DBを切り替え（TEST_DB_NAME など）
-- モックは必要最小限に（本物のDBでテストする方が安全）
+- **モックは外部API等の外部結合のみ**に限定
+- **内部実装（リポジトリ、サービス層）はモックしない**
 - Cobra コマンドはロジックを分離してテストしやすく
 
 ## サイクル例
