@@ -50,6 +50,7 @@ project/
 - GORM は接続管理、トランザクション境界、単純な 1 件取得・更新に限定して利用してよい
 - 状態遷移、履歴管理、存在確認、冪等性、排他制御は SQL を優先する
 - `Count -> if 0 then Insert/Create` のアプリ側分岐は避け、DB 側で一貫して判定・更新する
+- 1回のSQLで効率よく取得・判定できる処理は、アプリ側で分解せずSQLで完結させる
 
 ## SQLとGORMの使い分け基準
 - 単純 CRUD: GORM で可
@@ -57,6 +58,7 @@ project/
 - `EXISTS` / `NOT EXISTS`、`INSERT ... SELECT`、`ON CONFLICT` が必要: SQL を優先
 - JOIN が多く業務意図を明示したい: SQL を優先
 - Scan 先の構造体マッピングだけを簡潔にしたい: GORM を併用してよい
+- SQL実行は GORM の `Raw` / `Exec` を使って実施する
 
 ## 冪等性・競合対策のルール
 - 存在確認と INSERT/UPDATE をアプリ側で分離しない
