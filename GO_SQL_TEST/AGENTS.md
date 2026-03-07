@@ -60,34 +60,6 @@
 - 今回は `sql/spring_boot_resources/schema.sql` をスキーマ正本とする
 - テーブル定義を Go の migration と SQL ファイルで二重管理しない
 
-### 推奨ディレクトリ構成
-```text
-project/
-├── sql/
-│   ├── spring_boot_resources/
-│   │   ├── schema.sql
-│   │   └── data.sql
-│   ├── queries/
-│   │   ├── high_skill_users_search.sql
-│   │   └── department_monthly_totals.sql
-│   └── dialect/
-│       ├── mysql/
-│       │   └── patches.sql
-│       └── postgres/
-│           └── patches.sql
-├── scripts/
-│   └── bootstrap-db.ps1
-├── test/
-│   ├── helper/
-│   │   └── db_helper.go
-│   └── integration/
-│       └── high_skill_users_mysql_test.go
-└── internal/
-    └── infrastructure/
-        └── query/
-            └── loader.go
-```
-
 ### 運用ルール
 - スキーマ変更時は `schema.sql` を先に更新する
 - DB 方言差分は `sql/dialect/{engine}` に閉じ込める
@@ -152,19 +124,6 @@ project/
 - DB を使う検証は実 DB への統合テストで行う
 - テスト関数名は英語、`t.Run` の表示名は日本語で書く
 - テスト内にクエリ文字列を書かず、`sql/*.sql` を読み込んで実行する
-
-### テスト構成の推奨
-```text
-test/
-├── helper/
-│   └── db_helper.go
-├── integration/
-│   ├── high_skill_users_mysql_test.go
-│   └── department_monthly_totals_mysql_test.go
-└── testdata/
-    ├── high_skill_users_seed.sql
-    └── department_monthly_totals_seed.sql
-```
 
 ### テスト観点
 - 正常系: 期待した行が返る

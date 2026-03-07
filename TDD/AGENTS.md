@@ -53,21 +53,6 @@
 6. Refactor: 共通処理を抽出 → すべて成功
 ```
 
-## ディレクトリ構成例
-```
-プロジェクト/
-├── src/
-│   └── user.ts              # 実装コード
-└── tests/
-    ├── unit/
-    │   ├── user.test.ts
-    │   └── user.validation.test.ts
-    ├── integration/
-    │   └── user.integration.test.ts
-    └── e2e/
-        └── user.e2e.test.ts
-```
-
 ## TDDのメリット
 - バグの早期発見
 - テストしやすい設計

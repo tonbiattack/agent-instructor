@@ -181,26 +181,6 @@ func TestUserCreateCommand(t *testing.T) {
 }
 ```
 
-## ディレクトリ構成例
-```
-project/
-├── cmd/
-│   └── root.go              # Cobra コマンド
-├── internal/
-│   ├── domain/
-│   │   └── user.go          # ドメインモデル
-│   ├── repository/
-│   │   ├── user.go          # リポジトリ実装
-│   │   └── user_test.go     # リポジトリテスト
-│   └── service/
-│       ├── user.go          # ビジネスロジック
-│       └── user_test.go     # サービステスト
-├── test/
-│   └── integration/
-│       └── user_test.go     # 統合テスト
-└── go.mod
-```
-
 ## 作業ルール
 - Red-Green-Refactor を厳密に守る
 - 一度に一つの機能に集中（小さなステップ）

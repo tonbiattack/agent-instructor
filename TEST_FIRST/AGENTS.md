@@ -47,14 +47,6 @@
   - 統合テスト: `user.integration.test.ts`
   - E2Eテスト: `user.e2e.test.ts`
 
-## ディレクトリ構成例
-```
-tests/
-├── unit/          # 単体テスト
-├── integration/   # 統合テスト
-└── e2e/          # E2Eテスト
-```
-
 ## チェックリスト
 - [ ] 要件を理解した
 - [ ] テストケースを列挙した

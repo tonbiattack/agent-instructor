@@ -234,40 +234,6 @@ func CreateTestUser(t *testing.T, db *gorm.DB, name, email string) *User {
 }
 ```
 
-## ディレクトリ構成例
-```
-project/
-├── cmd/
-│   ├── root.go
-│   ├── user.go              # 実装（テスト後）
-│   └── user_test.go         # テスト（実装前）
-├── internal/
-│   ├── domain/
-│   │   └── user.go          # ドメインモデル
-│   ├── usecase/
-│   │   ├── user.go          # ユースケース（テスト後）
-│   │   └── user_test.go     # ユースケーステスト（実装前）
-│   ├── interface/
-│   │   └── http/
-│   │       ├── user_handler.go      # Ginハンドラー（テスト後）
-│   │       └── user_handler_test.go # ハンドラーテスト（実装前）
-│   ├── infrastructure/
-│   │   └── persistence/
-│   │       └── user_repository.go   # GORM実装（テスト後）
-│   ├── repository/
-│   │   ├── interface.go     # インターフェース（実装前）
-│   │   ├── user.go          # リポジトリ実装（テスト後）
-│   │   └── user_test.go     # リポジトリテスト（実装前）
-│   └── service/
-│       ├── user.go          # ビジネスロジック（テスト後）
-│       └── user_test.go     # サービステスト（実装前）
-├── test/
-│   ├── helper.go            # テストヘルパー
-│   └── integration/
-│       └── user_test.go     # 統合テスト（実装前）
-└── go.mod
-```
-
 ## ルール
 - テストは実装前に必ず作成
 - **テスト関数名は英語で記載し、実行名（`t.Run` の名前）は日本語で記載**

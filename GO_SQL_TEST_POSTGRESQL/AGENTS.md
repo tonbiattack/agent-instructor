@@ -17,27 +17,6 @@
 - 共通検索 SQL: `sql/queries/*.sql`
 - PostgreSQL 専用検索 SQL が必要な場合のみ `sql/dialect/postgres/*.sql` に分離する
 
-## 推奨ディレクトリ構成
-```text
-project/
-├── sql/
-│   ├── spring_boot_resources/
-│   │   ├── schema.sql
-│   │   └── data.sql
-│   ├── queries/
-│   │   └── high_skill_users_search.sql
-│   └── dialect/
-│       └── postgres/
-│           ├── schema_patch.sql
-│           ├── data_patch.sql
-│           └── high_skill_users_search.sql
-├── scripts/
-│   └── bootstrap-db.ps1
-└── test/
-    └── integration/
-        └── high_skill_users_postgres_test.go
-```
-
 ## PostgreSQL での実装ルール
 - `SERIAL` / `IDENTITY`、真偽値、日時関数、`ON CONFLICT` などの方言差分は PostgreSQL 差分ファイルで吸収する
 - 重複排除が不要な場合は `UNION ALL` を優先する

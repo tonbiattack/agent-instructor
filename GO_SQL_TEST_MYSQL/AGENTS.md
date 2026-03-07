@@ -17,27 +17,6 @@
 - 共通検索 SQL: `sql/queries/*.sql`
 - MySQL 専用検索 SQL が必要な場合のみ `sql/dialect/mysql/*.sql` に分離する
 
-## 推奨ディレクトリ構成
-```text
-project/
-├── sql/
-│   ├── spring_boot_resources/
-│   │   ├── schema.sql
-│   │   └── data.sql
-│   ├── queries/
-│   │   └── high_skill_users_search.sql
-│   └── dialect/
-│       └── mysql/
-│           ├── schema_patch.sql
-│           ├── data_patch.sql
-│           └── high_skill_users_search.sql
-├── scripts/
-│   └── bootstrap-db.ps1
-└── test/
-    └── integration/
-        └── high_skill_users_mysql_test.go
-```
-
 ## MySQL での実装ルール
 - `AUTO_INCREMENT`、真偽値表現、日時関数などの方言差分は MySQL 差分ファイルで吸収する
 - 重複排除が不要な場合は `UNION ALL` を優先する

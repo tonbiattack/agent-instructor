@@ -42,29 +42,6 @@
   - DB 方言差分の吸収が困難になる
   - EXPLAIN で不利な実行計画になる
 
-## 推奨ディレクトリ構成
-```text
-project/
-├── sql/
-│   ├── schema/
-│   │   ├── schema.sql
-│   │   └── patches/
-│   │       ├── mysql.sql
-│   │       └── postgres.sql
-│   ├── seed/
-│   │   ├── data.sql
-│   │   └── master_data.sql
-│   ├── queries/
-│   │   ├── high_skill_users_search.sql
-│   │   ├── department_monthly_totals.sql
-│   │   └── employee_exists.sql
-│   └── testdata/
-│       ├── high_skill_users_seed.sql
-│       └── department_monthly_totals_seed.sql
-└── scripts/
-    └── bootstrap-db.ps1
-```
-
 ## スキーマ管理
 
 ### 正本の原則
