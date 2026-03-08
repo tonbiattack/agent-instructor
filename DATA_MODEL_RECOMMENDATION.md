@@ -33,6 +33,17 @@ flowchart TD
 - 参照性能重視・通常業務中心: Mutable + 必要箇所のみ履歴
 - 要件が混在: Hybrid を標準にして対象限定で Immutable を追加
 
+## 方式別のメリデメ要約
+- Mutable
+  - メリット: 軽い、速い、実装が簡単
+  - デメリット: 履歴追跡が弱い
+- Immutable Event
+  - メリット: 監査と追跡に強い
+  - デメリット: 参照が重い、肥大化しやすい
+- Hybrid
+  - メリット: 履歴と性能のバランスが最もよい
+  - デメリット: 更新時の整合性管理が必要
+
 ## 最小実装テンプレート
 - `users`（現在値）: `created_at`, `update_at`
 - `user_status_events`（履歴）: `created_at` のみ（`update_at` なし）
