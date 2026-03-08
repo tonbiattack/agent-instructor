@@ -50,6 +50,9 @@
 - `data.sql` は開発用の最小初期データとして扱う
 - テスト固有データは `data.sql` に混ぜず、各テストまたは `test/testdata/*.sql` で投入する
 - PostgreSQL でのみ必要な補正は `sql/dialect/postgres/schema_patch.sql` や `data_patch.sql` に切り出す
+- 原則すべてのテーブルに `created_at` と `update_at` を付与する
+- 履歴系テーブルには `update_at` を付与しない
+- status は `CHECK` 制約ではなく status マスタテーブルを作成し、外部キー参照で管理する
 
 ## SQL ファイルの書き方
 - SQL ファイル冒頭に以下をコメントで書く
