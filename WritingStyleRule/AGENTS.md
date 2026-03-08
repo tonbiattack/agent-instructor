@@ -12,3 +12,4 @@
 - Avoid AI-like repetitive emphasis patterns and symbolic decoration.
 - Prefer natural Japanese prose that reads like it was written by a person.
 - Keep formatting simple and practical: headings, short paragraphs, and bullet lists when needed.
+- 図が必要な場合は Mermaid を使用する。

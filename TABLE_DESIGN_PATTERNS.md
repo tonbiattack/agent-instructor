@@ -3,6 +3,14 @@
 ## 目的
 実務で頻出するテーブル設計の型を整理し、要件に応じて使い分けるための判断材料を提供する。
 
+## パターン全体像
+```mermaid
+flowchart LR
+  A[Mutable<br/>現在値のみ] --> C[Hybrid<br/>現在値 + 履歴]
+  B[Immutable Event<br/>履歴のみ] --> C
+  C --> D[Status Master + FK]
+```
+
 ## 共通ルール
 - 原則、全テーブルに `created_at` と `update_at` を持たせる
 - 履歴系テーブル（イベント・監査ログ）は `update_at` を持たせない
@@ -40,6 +48,15 @@
 更新フロー:
 1. 履歴テーブルへ INSERT
 2. 現在値テーブルを UPDATE
+
+```mermaid
+sequenceDiagram
+  participant App as Application
+  participant Ev as user_status_events
+  participant Cur as users
+  App->>Ev: INSERT status event
+  App->>Cur: UPDATE current status
+```
 
 特徴:
 - 履歴保持と高速参照を両立

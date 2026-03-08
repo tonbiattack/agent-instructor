@@ -1,8 +1,16 @@
 # データモデル方式の実務推奨（結論版）
 
 ## 結論
-おすすめは **Hybrid（現在値テーブル + イベント履歴テーブル）** です。  
-**全テーブルをイミュータブル化する方式は、通常業務では重すぎることが多い** ため、対象を絞る運用が実務的です。
+おすすめは Hybrid（現在値テーブル + イベント履歴テーブル）です。  
+全テーブルをイミュータブル化する方式は、通常業務では重すぎることが多いため、対象を絞る運用が実務的です。
+
+## 推奨イメージ
+```mermaid
+flowchart TD
+  A[全イミュータブル] -->|重くなりやすい| B[対象を限定]
+  B --> C[Hybridを標準採用]
+  C --> D[イベント系のみImmutable強化]
+```
 
 ## なぜ Hybrid か
 - 現在値参照が速い（一覧・検索・API応答が軽い）
@@ -35,3 +43,10 @@
 2. 性能課題はインデックス・集約で対処
 3. 監査が必要な領域だけ Immutable を強化
 4. 全面 Immutable は監査要件が極めて強い場合のみ検討
+
+```mermaid
+flowchart LR
+  S1[Start Hybrid] --> S2[Tune Index/Aggregation]
+  S2 --> S3[Expand Immutable for audit-critical domain]
+  S3 --> S4[Full Immutable only if strict audit demands]
+```
