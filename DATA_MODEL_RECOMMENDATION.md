@@ -33,6 +33,30 @@ flowchart TD
 - 参照性能重視・通常業務中心: Mutable + 必要箇所のみ履歴
 - 要件が混在: Hybrid を標準にして対象限定で Immutable を追加
 
+## マスタ系とトランザクション系の位置づけ
+- マスタ系テーブル: Mutable を基本にする
+  - 例: `status_master`, `currency_master`, `country_master`
+- トランザクション系テーブル: Hybrid を基本にする
+  - 例: 申請、承認、入出金、売買、状態遷移
+- 監査要件が特に強いトランザクション: Immutable Event を追加で適用する
+
+```mermaid
+flowchart LR
+  M[Master Data] --> MM[Mutable]
+  T[Transaction Data] --> H[Hybrid]
+  H --> I[Immutable Event for audit-critical domain]
+```
+
+## status等を数値直持ちしている場合の扱い
+- `status = 1/2/3` のような直値運用は暫定対応として扱う
+- 新規実装では status マスタ + 外部キー参照へ統一する
+- 既存は段階移行を推奨する
+  1. status マスタ作成（`status_id`, `status_code`, `status_name`）
+  2. 業務テーブルに `status_id` 追加
+  3. 既存の数値列から `status_id` へデータ移行
+  4. アプリ参照を `status_id` に切替
+  5. 旧 status 数値列を廃止
+
 ## 方式別のメリデメ要約
 - Mutable
   - メリット: 軽い、速い、実装が簡単

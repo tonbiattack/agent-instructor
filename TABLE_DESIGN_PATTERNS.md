@@ -80,6 +80,33 @@ sequenceDiagram
 - マスタ属性・プロフィール: Mutable を優先
 - 状態の選択肢が増減する: Status Master + FK を必須化
 
+## データ種別ごとの推奨マッピング
+- マスタ系: Mutable
+- トランザクション系: Hybrid
+- 監査重要トランザクション: Hybrid + Immutable Event
+
+```mermaid
+flowchart TD
+  A[Data Category] --> B[Master]
+  A --> C[Transaction]
+  B --> D[Mutable]
+  C --> E[Hybrid]
+  E --> F[Add Immutable Event when strict audit is required]
+```
+
+## status等を数値直持ちしている既存設計
+現状:
+- 業務テーブル側で `status = 1/2/3` のように数値を直接保持している
+
+課題:
+- 意味がコード依存になり、SQLだけで意味を読み取りにくい
+- 値追加や名称変更の運用コストが高い
+- 参照整合性を DB 制約で担保しにくい
+
+推奨:
+- status マスタテーブルを作成し、業務テーブルは `status_id` を FK 参照する
+- 直値列は移行期間のみ併存させ、最終的に廃止する
+
 ## 各方式のメリット・デメリット
 ### Mutable（現在値のみ）
 メリット:
