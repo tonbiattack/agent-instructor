@@ -11,3 +11,5 @@
 - Avoid AI-like repetitive emphasis patterns and symbolic decoration.
 - Prefer natural Japanese prose that reads like it was written by a person.
 - Keep formatting simple and practical: headings, short paragraphs, and bullet lists when needed.
+
+- **コード内のコメント（行コメント・ブロックコメント・ドキュメンテーションコメント）はすべて日本語で記載する**
