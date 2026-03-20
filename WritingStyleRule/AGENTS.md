@@ -6,6 +6,7 @@
 - 記事ファイルのファイル名と、記事内のタイトル（H1）は同じ文言にそろえる。
 - タイトルは内容が過不足なく伝わる表現にする。
 - 導入で「この記事で何を扱うか」を先に明示する。
+- タイトル（H1）の直後に「## はじめに」セクションを追加する。公開時にタイトルを本文から切り離すため、H1 は独立させ、本文は「はじめに」から始める。
 
 - Do not use markdown bold markers like `**...**` for emphasis.
 - Do not use separator lines such as `---` as visual dividers in article text.
