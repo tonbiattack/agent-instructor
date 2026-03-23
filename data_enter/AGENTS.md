@@ -1,0 +1,2 @@
+- MySQL の文字コードは `utf8mb4` を前提とする。`docker-compose.yml` のサーバー設定、投入SQLの `SET NAMES utf8mb4`, Go の DSN の `charset=utf8mb4` を揃えて変更する
+- 日本語サンプルデータを含む SQL を追加・更新するときは、初期投入時に文字化けしないことを実DBで確認する
